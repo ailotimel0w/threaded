@@ -111,7 +111,7 @@ function AddDataToLocalStorage(idNum){
     orders.push(added);
     console.log(orders);
 
-    localStorage.setItem('session', JSON.stringify(orders.sort()));
+    localStorage.setItem('session', JSON.stringify(orders));
     initCart();
 }
 
@@ -127,6 +127,7 @@ function RemoveDataToLocalStorage(idNum){
 // SaveDataToLocalStorage('aaaaadddddd');
 
 function initCart() {
+    orders = JSON.parse(localStorage.getItem('session')) || [];
     const output = orders.reduce((acc, curr) => {
         curr.count = 1;
         const exists = acc.find(o => o.id === curr.id);
@@ -135,7 +136,7 @@ function initCart() {
         
         return acc;
       }, []);
-      
+    
     console.log(output);
     document.querySelector('.shopping-cart  .products').innerHTML = '';
     document.querySelector('#cart span').innerHTML = orders.length;
